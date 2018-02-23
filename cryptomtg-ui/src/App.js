@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-
+import CardList from './components/CardList'
 class App extends Component {
   render() {
     return (
@@ -18,7 +18,7 @@ class App extends Component {
           </TabList>
 
           <TabPanel>
-            <h2>Any content 1</h2>
+            <CardList/>
           </TabPanel>
           <TabPanel>
             <h2>Any content 2</h2>
