@@ -57,6 +57,8 @@ export default class AuctionItem extends Component {
   }
 
   render(){
+    const duration = this.props.endTime-this.state.date
+    const durationFormatted = this.getTimeLeft(duration)
     return (
       <div>
         <h4>{this.props.name}</h4>
@@ -64,9 +66,9 @@ export default class AuctionItem extends Component {
                             <img alt={this.props.name} style={{width:180}}  src={'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + this.props.id + '&type=card'}/></a>
         <p>Current Bid: {this.props.highestBid}</p>
         {
-          ((this.props.endTime-this.state.date) <= 60000) ? <p style={{color:'red'}}>Time Left: {this.getTimeLeft(this.props.endTime-this.state.date)}</p>: <p>Time Left: {this.getTimeLeft(this.props.endTime-this.state.date)}</p>
+          (duration <= 60000) ? <p style={{color:'red'}}>Time Left: {durationFormatted}</p>: <p>Time Left: {durationFormatted}</p>
         }
-        <button className='button'>Bid</button>
+        {(duration <= 0) ? <p> Auction Ended </p> : <button className='button'>Bid</button>}
       </div>
     );
   }
