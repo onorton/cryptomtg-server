@@ -3,6 +3,8 @@ import './App.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CardList from './components/CardList'
+import AuctionList from './components/AuctionList'
+
 class App extends Component {
   render() {
     return (
@@ -21,7 +23,7 @@ class App extends Component {
             <CardList/>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 2</h2>
+            <AuctionList/>
           </TabPanel>
           <TabPanel>
             <h2>Any content 3</h2>
