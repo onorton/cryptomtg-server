@@ -7,10 +7,13 @@ export default class CardList extends Component {
     const cards = [{name: 'Victimize', id: 413655},{name: 'Giant Mantis', id:401896}];
 
     return (
+      <div>
+      <button className='button'>Get Random Card: 100</button>
       <StackGrid columnWidth={200}>
         {cards.map((card) => <a target="_blank" href={'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + card.id}>
                             <img alt={card.name} style={{width:200}}  src={'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.id + '&type=card'}/></a>)}
       </StackGrid>
+      </div>
     );
   }
 }
