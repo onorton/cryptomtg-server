@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
+import './toastr.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CardList from './components/CardList'
 import AuctionList from './components/AuctionList'
 import TradeList from './components/TradeList'
+const Web3 = require('web3');
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+const toastr = require('toastr');
+toastr.options.closeButton = true;
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: ''
+    };
+  }
+
+  componentWillMount() {
+    const app = this
+    web3.eth.getAccounts((err, accounts) => {
+      if (err) {
+        toastr.error("No accounts found.")
+      }
+      app.setState({address:accounts[0]})
+    })
+  }
+
+
+
   render() {
     return (
       <div className="App">
@@ -21,7 +46,7 @@ class App extends Component {
           </TabList>
 
           <TabPanel>
-            <CardList/>
+            <CardList address={this.state.address}/>
           </TabPanel>
           <TabPanel>
             <AuctionList/>

@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ethereumjs-testrpc": "^6.0.3",
+    "fs": "0.0.1-security",
+    "ganache-cli": "^6.0.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "react-stack-grid": "^0.7.1",
-    "react-tabs": "^2.2.1"
+    "react-tabs": "^2.2.1",
+    "solc": "^0.4.20",
+    "toastr": "^2.1.4",
+    "truffle": "^4.0.6",
+    "web3": "^0.20.3"
   },
   "scripts": {
     "start": "react-scripts start",
