@@ -33,6 +33,9 @@ class App extends Component {
 
 
   render() {
+    if (!this.state.address) {
+      return (<div/>)
+    }
     return (
       <div className="App">
         <header className="App-header">

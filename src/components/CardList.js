@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import StackGrid from "react-stack-grid";
 const Web3 = require('web3')
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+const toastr = require('toastr');
 
 const cardGenerator = {
   "abi": [
@@ -160,8 +161,33 @@ export default class CardList extends Component {
       if (!error) {
         const cardInstance = CardContract.at(event.args.card)
         cardList.saveCard(cardInstance)
+      } else {
+        toastr.error("Could not confirm card on blockchain.")
       }
     });
+  }
+
+  componentDidMount() {
+    const cardList = this
+    if (this.props.address) {
+    fetch('http://localhost:8000/cards/' + cardList.props.address + '/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          cardList.setState({cards: data.cards})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+    }
+
   }
 
   saveCard(cardInstance) {
@@ -171,7 +197,7 @@ export default class CardList extends Component {
     const id = cardInstance.id()
     var cards = cardList.state.cards
 
-    fetch('http://127.0.0.1/cards/' + cardList.props.address, {
+    fetch('http://localhost:8000/cards/' + cardList.props.address +"/", {
       method: 'POST',
       body: JSON.stringify({name: name, id: id}),
       headers: {
@@ -181,8 +207,9 @@ export default class CardList extends Component {
 
       if (response.status == 200) {
         response.json().then(function(data) {
-          cards.push({name: name, id: data.cardId});
+          cards.push({name: name, cardId: data.cardId});
           cardList.setState({cards: cards})
+          toastr.success("Congratulations! You have a new copy of \"" + name + "\".")
         })
       }
 
@@ -193,15 +220,12 @@ export default class CardList extends Component {
   }
   render(){
     web3.eth.defaultAccount = this.props.address
-    const cards = [{name: 'Victimize', id: 413655},{name: 'Giant Mantis', id:401896}];
-
-
     return (
       <div>
       <button className='button' onClick={() => this.state.generator.generateCard({value: 100, gas: 500000})}>Get Random Card: 100</button>
       <StackGrid columnWidth={200}>
-        {cards.map((card) => <a target="_blank" href={'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + card.id}>
-                            <img alt={card.name} style={{width:200}}  src={'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.id + '&type=card'}/></a>)}
+        {this.state.cards.map((card) => <a target="_blank" href={'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + card.cardId}>
+                            <img alt={card.name} style={{width:200}}  src={'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.cardId + '&type=card'}/></a>)}
       </StackGrid>
       </div>
     );
