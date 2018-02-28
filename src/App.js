@@ -52,7 +52,7 @@ class App extends Component {
             <CardList address={this.state.address}/>
           </TabPanel>
           <TabPanel>
-            <AuctionList/>
+            <AuctionList address={this.state.address}/>
           </TabPanel>
           <TabPanel>
             <TradeList/>

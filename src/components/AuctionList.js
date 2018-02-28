@@ -1,18 +1,69 @@
 import React, { Component } from 'react';
 import StackGrid from "react-stack-grid";
 import AuctionItem from './AuctionItem'
+import AuctionDialog from './AuctionDialog'
+import {ModalManager} from 'react-dynamic-modal';
 
 export default class AuctionList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      auctions: [],
+      playerCards: []
+    };
+  }
+
+  componentDidMount() {
+    const auctionList = this
+    fetch('http://localhost:8000/auctions/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          auctionList.setState({auctions: data.auctions})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+
+    fetch('http://localhost:8000/cards/' + this.props.address +'/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          auctionList.setState({playerCards: data.cards})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+  }
+
+
+  openModal(){
+      ModalManager.open(<AuctionDialog address={this.props.address} cards={this.state.playerCards}/>);
+  }
   render(){
-    const auctionItems = [{name: 'Victimize', id: 413655, highestBid: 10, endTime: new Date('2018-02-23T23:50:00'), address:'0fDffJDhhfhdje'},{name: 'Giant Mantis', id:401896, highestBid: 100, endTime: new Date('2018-02-24T12:00:00'), address:'DADffJDCUWE9hfhdje'}];
+
 
     return (
       <div>
-      <button className='button'>Put up a card for auction</button>
-      <StackGrid columnWidth={200}>
-        {auctionItems.map((item) => <AuctionItem name={item.name} id={item.id} highestBid={item.highestBid} endTime={item.endTime} address={item.address}/>)}
-      </StackGrid>
-
+        <button className='button' onClick={this.openModal.bind(this)}>Put up a card for auction</button>
+        <StackGrid columnWidth={200}>
+          {this.state.auctions.map((auction) => <AuctionItem name={auction.name} id={auction.cardId} highestBid={auction.highestBid} endTime={auction.endTime}/>)}
+        </StackGrid>
       </div>
     );
   }
