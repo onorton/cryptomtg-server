@@ -25,6 +25,7 @@ export default class AuctionList extends Component {
 
       if (response.status == 200) {
         response.json().then(function(data) {
+          console.log(data.auctions)
           auctionList.setState({auctions: data.auctions})
         })
         }
@@ -56,13 +57,12 @@ export default class AuctionList extends Component {
       ModalManager.open(<AuctionDialog address={this.props.address} cards={this.state.playerCards}/>);
   }
   render(){
-
-
+    const auctionList = this
     return (
       <div>
         <button className='button' onClick={this.openModal.bind(this)}>Put up a card for auction</button>
         <StackGrid columnWidth={200}>
-          {this.state.auctions.map((auction) => <AuctionItem name={auction.name} id={auction.cardId} highestBid={auction.highestBid} endTime={auction.endTime}/>)}
+          {this.state.auctions.map((auction) => <AuctionItem name={auction.name} id={auction.cardId} highestBid={auction.highestBid} endTime={new Date(auction.auctionEnd)}/>)}
         </StackGrid>
       </div>
     );
