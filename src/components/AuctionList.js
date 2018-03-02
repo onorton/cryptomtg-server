@@ -4,6 +4,7 @@ import AuctionItem from './AuctionItem'
 import AuctionDialog from './AuctionDialog'
 import {ModalManager} from 'react-dynamic-modal';
 
+
 export default class AuctionList extends Component {
 
   constructor(props) {
@@ -16,6 +17,8 @@ export default class AuctionList extends Component {
 
   componentDidMount() {
     const auctionList = this
+
+
     fetch('http://localhost:8000/auctions/', {
       method: 'GET',
       headers: {
@@ -25,7 +28,6 @@ export default class AuctionList extends Component {
 
       if (response.status == 200) {
         response.json().then(function(data) {
-          console.log(data.auctions)
           auctionList.setState({auctions: data.auctions})
         })
         }
@@ -62,7 +64,7 @@ export default class AuctionList extends Component {
       <div>
         <button className='button' onClick={this.openModal.bind(this)}>Put up a card for auction</button>
         <StackGrid columnWidth={200}>
-          {this.state.auctions.map((auction) => <AuctionItem name={auction.name} id={auction.cardId} highestBid={auction.highestBid} endTime={new Date(auction.auctionEnd)}/>)}
+          {this.state.auctions.map((auction) => <AuctionItem address={this.props.address} auctionAddress={auction.address} name={auction.name} id={auction.cardId} highestBid={auction.highestBid} endTime={new Date(auction.auctionEnd)}/>)}
         </StackGrid>
       </div>
     );
