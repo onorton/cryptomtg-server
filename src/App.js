@@ -26,7 +26,8 @@ class App extends Component {
       if (err) {
         toastr.error("No accounts found.")
       }
-      app.setState({address:accounts[0]})
+      console.log(accounts[1])
+      app.setState({address:accounts[1]})
     })
   }
 

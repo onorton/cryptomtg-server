@@ -63,7 +63,7 @@ export default class TradeList extends Component {
       <div>
       <button className='button' onClick={this.openModal.bind(this)}>Start Trade</button>
       <StackGrid columnWidth={450}>
-        {this.state.trades.map((trade) => <Trade address={this.props.address} address1={trade.first_party} address2={trade.second_party} cards1={trade.first_party_items} cards2={trade.second_party_items}/>)}
+        {this.state.trades.map((trade) => <Trade address={this.props.address} tradeAddress={trade.address} address1={trade.first_party} address2={trade.second_party} cards1={trade.first_party_items} cards2={trade.second_party_items}/>)}
       </StackGrid>
 
       </div>
