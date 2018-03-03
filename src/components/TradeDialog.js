@@ -357,6 +357,7 @@ export default class TradeDialog extends Component {
           if (response.status == 200) {
             response.json().then(function(data) {
               toastr.success("Congratulations! You have have started a trade with " + tradeDialog.state.secondParty + ".")
+              tradeDialog.props.updateParent()
             })
 
             fetch('http://localhost:8000/cards/transfer/'+card.id(), {
