@@ -25,7 +25,11 @@ SECRET_KEY = '#nzxtm(*du_zxyu4)@5)jm&bbxkxu6i9hf5ul06m$&wwtmihdx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['cryptomtg-server.herokuapp.com','localhost']
+=======
+ALLOWED_HOSTS = ['cryptomtg-server.herokuapp.com']
+>>>>>>> 292dd156a5ec0897fb309857d707d1760d319a17
 
 
 # Application definition
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
 
     'corsheaders',
     'cards',
@@ -46,6 +51,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+=======
+]
+
+MIDDLEWARE = [
+>>>>>>> 292dd156a5ec0897fb309857d707d1760d319a17
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,12 +68,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cryptomtg_server.urls'
 
+<<<<<<< HEAD
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:3000',
     'localhost:3000',
     'cryptomtg.herokuapp.com',
 )
 
+=======
+>>>>>>> 292dd156a5ec0897fb309857d707d1760d319a17
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
