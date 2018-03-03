@@ -378,7 +378,7 @@ export default class AuctionDialog extends Component {
 
   render(){
     return (
-       <Modal style={{content: {textAlign: 'center', width: '40%', height: 600}}}
+       <Modal style={{content: {textAlign: 'center', width: '40%', height: 800}}}
           onRequestClose={() => true}
           effect={Effect.ScaleUp}>
           <h1>Auction off Card</h1>

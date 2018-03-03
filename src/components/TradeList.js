@@ -1,18 +1,69 @@
 import React, { Component } from 'react';
 import StackGrid from "react-stack-grid";
 import Trade from './Trade'
+import TradeDialog from './TradeDialog'
+import {ModalManager} from 'react-dynamic-modal';
 
 export default class TradeList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      trades: [],
+      playerCards: []
+    };
+  }
+
+  componentDidMount() {
+    const tradeList = this
+
+
+    fetch('http://localhost:8000/trades/' + this.props.address + '/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          tradeList.setState({trades: data.trades})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+
+    fetch('http://localhost:8000/cards/' + this.props.address +'/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          tradeList.setState({playerCards: data.cards})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+
+  }
+
+  openModal(){
+      ModalManager.open(<TradeDialog address={this.props.address} cards={this.state.playerCards}/>);
+  }
+
   render(){
-    const trades = [
-      {address1: 'asdhDDD3234234', address2: 'asdasdj34234234', cards1:[{name: 'Victimize', id: 413655},{name: 'Giant Mantis', id:401896}],cards2:[{name: 'Giant Mantis', id:401896}]}
-    ];
 
     return (
       <div>
-      <button className='button'>Start Trade</button>
+      <button className='button' onClick={this.openModal.bind(this)}>Start Trade</button>
       <StackGrid columnWidth={450}>
-        {trades.map((trade) => <Trade address1={trade.address1} address2={trade.address2} cards1={trade.cards1} cards2={trade.cards2}/>)}
+        {this.state.trades.map((trade) => <Trade address={this.props.address} address1={trade.first_party} address2={trade.second_party} cards1={trade.first_party_items} cards2={trade.second_party_items}/>)}
       </StackGrid>
 
       </div>

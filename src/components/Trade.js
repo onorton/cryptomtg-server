@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 export default class Trade extends Component {
 
+  shortenAddress(address) {
+    var shortenedAddress = address.slice(0, -24) + '...'
+    if (address == this.props.address) {
+      shortenedAddress += ' (You)'
+    }
+    return shortenedAddress
+
+  }
   render(){
     return (
       <div style={{borderStyle:'solid', borderRadius: '25px', padding: 5, borderWidth: 2}}>
       <div style={{overflow:'auto',height: 'auto', marginBottom:20, paddingLeft:20, paddingRight:20}}>
         <div style={{float:'left'}}>
-          <h4>{this.props.address1}</h4>
+          <h4>{this.shortenAddress(this.props.address1)}</h4>
           <ul style={{listStyleType: 'none', padding: 0, margin: 0}}>
            {
             this.props.cards1.map(
@@ -16,7 +24,7 @@ export default class Trade extends Component {
            </ul>
         </div>
         <div style={{float:'right'}}>
-          <h4>{this.props.address2}</h4>
+          <h4>{this.shortenAddress(this.props.address2)}</h4>
           <ul style={{listStyleType: 'none', padding: 0, margin: 0}}>
            {
             this.props.cards2.map(
