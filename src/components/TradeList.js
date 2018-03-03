@@ -36,7 +36,7 @@ export default class TradeList extends Component {
   }
 
   openModal(){
-      ModalManager.open(<TradeDialog updateParent={() => this.fetchTrades()} address={this.props.address} cards={this.state.playerCards}/>);
+      ModalManager.open(<TradeDialog updateParent={this.fetchTrades.bind(this)} address={this.props.address} cards={this.state.playerCards}/>);
   }
 
   fetchTrades() {

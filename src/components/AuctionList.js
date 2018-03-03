@@ -17,25 +17,7 @@ export default class AuctionList extends Component {
 
   componentDidMount() {
     const auctionList = this
-
-
-    fetch('http://localhost:8000/auctions/', {
-      method: 'GET',
-      headers: {
-          "Content-Type": "application/json"
-      }
-    }).then(function(response) {
-
-      if (response.status == 200) {
-        response.json().then(function(data) {
-          auctionList.setState({auctions: data.auctions})
-        })
-        }
-      })
-    .catch(function(error) {
-      console.log('There has been a problem with your fetch operation: ' + error.message);
-    });
-
+    this.fetchAuctions()
     fetch('http://localhost:8000/cards/' + this.props.address +'/', {
       method: 'GET',
       headers: {
@@ -56,7 +38,29 @@ export default class AuctionList extends Component {
 
 
   openModal(){
-      ModalManager.open(<AuctionDialog address={this.props.address} cards={this.state.playerCards}/>);
+      ModalManager.open(<AuctionDialog updateParent={this.fetchAuctions.bind(this)} address={this.props.address} cards={this.state.playerCards}/>);
+  }
+
+  fetchAuctions() {
+    console.log("sup")
+    const auctionList = this
+    fetch('http://localhost:8000/auctions/', {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(function(response) {
+
+      if (response.status == 200) {
+        response.json().then(function(data) {
+          auctionList.setState({auctions: data.auctions})
+        })
+        }
+      })
+    .catch(function(error) {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+
   }
   render(){
     const auctionList = this
