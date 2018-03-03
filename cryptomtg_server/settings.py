@@ -25,11 +25,7 @@ SECRET_KEY = '#nzxtm(*du_zxyu4)@5)jm&bbxkxu6i9hf5ul06m$&wwtmihdx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
 ALLOWED_HOSTS = ['cryptomtg-server.herokuapp.com','localhost']
-=======
-ALLOWED_HOSTS = ['cryptomtg-server.herokuapp.com']
->>>>>>> 292dd156a5ec0897fb309857d707d1760d319a17
 
 
 # Application definition
