@@ -1,10 +1,7 @@
 dj-database-url==0.4.2
 Django==2.0.2
-<<<<<<< HEAD
 django-cors-headers==2.1.0
 django-webpack-loader==0.6.0
-=======
->>>>>>> 292dd156a5ec0897fb309857d707d1760d319a17
 gunicorn==19.7.1
 psycopg2==2.7.4
 pytz==2018.3
